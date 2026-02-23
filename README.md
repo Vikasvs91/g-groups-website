@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # G Groups Website
 
 Official website for **G Groups** – A professional corporate website built using HTML, CSS, and JavaScript.
@@ -104,3 +105,6 @@ All rights reserved © 2026.
 
 ---
 
+=======
+# g-groups-website
+>>>>>>> 7b01be905b9bfed399523dcf56f66f02b7c484e0
