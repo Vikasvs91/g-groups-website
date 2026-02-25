@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Us | G Groups</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact G Groups for professional services and business inquiries. We are here to help you.">
+
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+   <!-- Header -->
+    <header class="main-header">
+        <div class="container nav-container">
+
+            <!-- Logo -->
+            <a href="../../index.html" class="logo">
+                <span class="logo-main">G</span>
+                <span class="logo-text">Group's</span>
+            </a>
+
+            <!-- Navigation -->
+            <nav id="navbar">
+                <ul class="nav-links">
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="./Services/services.html">Services</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <div class="mobile-cta">
+                    <a href="contact.html" class="btn-cta">
+                        Talk to Expert
+                    </a>
+                </div>
+            </nav>
+
+            <!-- Right Side Actions -->
+            <div class="nav-actions">
+                <a href="contact.html" class="btn-cta">
+                    <i class="fa-solid fa-headset"></i>
+                    <span>Talk to Expert</span>
+                </a>
+
+                <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
+                    <i class="fa-solid fa-moon icon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    <div id="overlay"></div>
+
+    <!-- Page Banner -->
+    <section class="page-banner">
+        <div class="container">
+            <h1>Contact Us</h1>
+            <p>We’d Love to Hear From You</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container contact-grid">
+
+            <!-- Contact Form -->
+            <div class="contact-form">
+                <h2>Send Us a Message</h2>
+
+                <form id="contactForm">
+
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Your Name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Your Email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" name="subject" placeholder="Subject">
+                    </div>
+
+                    <div class="form-group">
+                        <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+                    </div>
+
+                    <button type="submit" class="hero-btn">Send Message</button>
+
+                    <!-- Success Message -->
+                    <p id="successMessage" style="display:none; color:green; margin-top:15px;">
+                        Thank you! Your message has been sent successfully.
+                    </p>
+
+                </form>
+            </div>
+
+            <script>
+            document.getElementById("contactForm").addEventListener("submit", function(e){
+                e.preventDefault();
+
+                const formData = new FormData(this);
+
+                fetch("https://script.google.com/macros/s/AKfycbynfnsy4jeUFQdUSRB-Hfs3zXBQ5s22QRS9g70sGdCsybAxqvDwbd0w616JamnBc9M/exec", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.text())
+                .then(data => {
+
+                    // Hide form elements
+                    document.querySelectorAll("#contactForm .form-group, #contactForm button")
+                        .forEach(el => el.style.display = "none");
+
+                    // Show thank you message
+                    document.getElementById("successMessage").style.display = "block";
+                })
+                .catch(error => {
+                    alert("Something went wrong. Please try again.");
+                });
+            });
+            </script>
+
+            <!-- Contact Info -->
+            <div class="contact-info">
+                <h2>Contact Information</h2>
+                <p><strong>Address:</strong> Your Business Address Here</p>
+                <p><strong>Email:</strong> ggroups.finance@gmail.com</p>
+                <p><strong>Phone:</strong> +91 7671942307</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Call To Action -->
+    <section class="cta">
+        <div class="container">
+            <h2>Let’s Work Together</h2>
+            <a href="./Services/services.html" class="hero-btn">Explore Our Services</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>© 2026 G Groups. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="../js/script.js"></script>
+
+</body>
+</html>

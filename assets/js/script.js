@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Create hamburger
     const menuToggle = document.createElement("div");
     menuToggle.classList.add("menu-toggle");
-    menuToggle.innerHTML = "☰";
+    menuToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
 
     // Append inside container
     navContainer.appendChild(menuToggle);
@@ -20,23 +20,88 @@ document.addEventListener("DOMContentLoaded", function () {
     // Open / Close Menu
     menuToggle.addEventListener("click", function () {
         navbar.classList.toggle("active");
-        overlay.classList.toggle("active");
+        menuToggle.classList.toggle("active");
+
+        if (navbar.classList.contains("active")) {
+            menuToggle.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+        } else {
+            menuToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
+        }
+
+        if (overlay) overlay.classList.toggle("active");
     });
 
     // Click outside (overlay) → Close
-    overlay.addEventListener("click", function () {
-        navbar.classList.remove("active");
-        overlay.classList.remove("active");
-    });
+    if (overlay) {
+        overlay.addEventListener("click", function () {
+            navbar.classList.remove("active");
+            overlay.classList.remove("active");
+        });
+    }
 
     // Optional: Close when clicking any menu link
     document.querySelectorAll(".nav-links a").forEach(link => {
         link.addEventListener("click", function () {
             navbar.classList.remove("active");
-            overlay.classList.remove("active");
+            if (overlay) overlay.classList.remove("active");
         });
     });
 
+    const header = document.querySelector(".main-header");
+
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 50) {
+            header.classList.add("scrolled");
+        } else {
+            header.classList.remove("scrolled");
+        }
+    });
+
+  // ==============================
+    // Global Theme Sync (All Pages)
+    // ==============================
+
+    const body = document.body;
+    const toggleBtn = document.getElementById("themeToggle");
+
+    // 1. Get saved theme
+    const savedTheme = localStorage.getItem("theme");
+
+    // 2. Apply saved theme
+    if (savedTheme === "dark") {
+        body.classList.add("dark");
+    } else {
+        body.classList.remove("dark");
+    }
+
+    // 3. Handle toggle button
+    if (toggleBtn) {
+        const icon = toggleBtn.querySelector(".icon");
+
+        // Set correct icon on page load
+        if (body.classList.contains("dark")) {
+            icon.classList.remove("fa-moon");
+            icon.classList.add("fa-sun");
+        } else {
+            icon.classList.remove("fa-sun");
+            icon.classList.add("fa-moon");
+        }
+
+        // 4. Toggle on click
+        toggleBtn.addEventListener("click", () => {
+            body.classList.toggle("dark");
+
+            const isDark = body.classList.contains("dark");
+            localStorage.setItem("theme", isDark ? "dark" : "light");
+
+            icon.classList.remove("fa-moon", "fa-sun");
+            icon.classList.add(isDark ? "fa-sun" : "fa-moon");
+
+            // Add rotate animation
+            toggleBtn.classList.add("active");
+            setTimeout(() => toggleBtn.classList.remove("active"), 500);
+        });
+    }
 
     /* =========================
        2. Smooth Scroll
@@ -53,10 +118,10 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
  /* =========================
-          2. Fade In Animation
+          3. Fade In Animation
  ========================== */
 
-    const fadeInSections = document.querySelectorAll('.fade-in');
+    const fadeInSections = document.querySelectorAll('.fade-in, .box, .service-card, .value-box, .section-description');
 
         if (fadeInSections.length > 0) {
 
@@ -76,20 +141,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =========================
-       3. Active Nav Highlight
-    ========================== */
-    const currentLocation = window.location.pathname.split("/").pop();
-    const menuItems = document.querySelectorAll("nav ul li a");
+    4. Active Nav Highlight
+    ========================= */
 
-    menuItems.forEach(link => {
-        if (link.getAttribute("href") === currentLocation) {
+    let currentPage = window.location.pathname.split("/").pop();
+
+    // If URL ends with "/", treat it as index.html
+    if (currentPage === "") {
+        currentPage = "index.html";
+    }
+
+    document.querySelectorAll(".nav-links a").forEach(link => {
+        let linkPage = link.getAttribute("href").split("/").pop();
+
+        if (linkPage === currentPage) {
             link.classList.add("active");
         }
     });
 
 
     /* =========================
-       4. Contact Form Validation
+       5. Contact Form Validation
     ========================== */
     const form = document.querySelector("form");
 
@@ -106,7 +178,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!email.match(emailPattern)) {
                 e.preventDefault();
                 alert("Please enter a valid email address.");
@@ -118,23 +190,23 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* =========================
-       5. Scroll Fade Animation
-    ========================== */
-    const fadeElements = document.querySelectorAll(".box, .service-card, .value-box, .section-title, .section-description");
+    // /* =========================
+    //    5. Scroll Fade Animation
+    // ========================== */
+    // const fadeElements = document.querySelectorAll(".box, .service-card, .value-box, .section-title, .section-description");
 
-    function fadeInOnScroll() {
-        fadeElements.forEach(el => {
-            const elementTop = el.getBoundingClientRect().top;
-            const windowHeight = window.innerHeight;
+    // function fadeInOnScroll() {
+    //     fadeElements.forEach(el => {
+    //         const elementTop = el.getBoundingClientRect().top;
+    //         const windowHeight = window.innerHeight;
 
-            if (elementTop < windowHeight - 50) {
-                el.classList.add("fade-in");
-            }
-        });
-    }
+    //         if (elementTop < windowHeight - 50) {
+    //             el.classList.add("fade-in");
+    //         }
+    //     });
+    // }
 
-    window.addEventListener("scroll", fadeInOnScroll);
-    fadeInOnScroll();
+    // window.addEventListener("scroll", fadeInOnScroll);
+    // fadeInOnScroll();
 
 });

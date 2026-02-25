@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="assets/css/style.css">
 
     <!-- Google Fonts -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 
@@ -23,20 +24,37 @@
         <div class="container nav-container">
 
             <!-- Logo -->
-            <div class="logo">
-                <a href="index.html">
-                    <img src="assets/images/logsample.png" alt="G Groups Logo">
-                </a>
-            </div>
+            <a href="index.html" class="logo">
+                <span class="logo-main">G</span>
+                <span class="logo-text">Group's</span>
+            </a>
+
             <!-- Navigation -->
             <nav id="navbar">
                 <ul class="nav-links">
-                    <li><a href="index.html" class="active">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="services.html">Services</a></li>
-                    <li><a href="contact.html" class="btn">Contact</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="./assets/pages/about.html">About</a></li>
+                    <li><a href="./assets/pages/Services/services.html">Services</a></li>
+                    <li><a href="./assets/pages/contact.html">Contact</a></li>
                 </ul>
+                <div class="mobile-cta">
+                    <a href="./assets/pages/contact.html" class="btn-cta">
+                        Talk to Expert
+                    </a>
+                </div>
             </nav>
+
+            <!-- Right Side Actions -->
+            <div class="nav-actions">
+                <a href="./assets/pages/contact.html" class="btn-cta">
+                    <i class="fa-solid fa-headset"></i>
+                    <span>Talk to Expert</span>
+                </a>
+
+                <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
+                    <i class="fa-solid fa-moon icon"></i>
+                </button>
+            </div>
         </div>
     </header>
     <div id="overlay"></div>
@@ -46,8 +64,12 @@
     <section class="hero">
         
         <!-- Background Video -->
-        <video autoplay muted loop playsinline class="hero-video">
-            <source src="assets/video/hero-video.mp4" type="video/mp4">
+        <video autoplay muted loop playsinline
+                preload="metadata"
+                aria-hidden="true" 
+                class="hero-video"
+                poster="assets/images/hero-fallback.png">
+            <source src="assets/video/Hero-video-main.mp4" type="video/mp4">
         </video>
 
         <!-- Overlay -->
@@ -55,18 +77,21 @@
 
         <div class="container hero-content">
             <h1 class="fade-in">
-                Building Trust.<br>
-                <span>Delivering Excellence.</span>
+                Your Trusted Partner in GST, Income Tax & Financial Compliance
             </h1>
+            <h2 class="hero-tagline slide-up">
+                Simplifying Compliance. Powering Business Growth.
+            </h2>
 
-            <p class="slide-up">
-                Your reliable partner in quality services and innovative solutions 
-                that drive success and long-term growth.
+            <p class="fade-in-delay">
+                End-to-end GST registration, Income Tax filing, payroll management, 
+                and statutory compliance — all handled with precision and care. 
+                We manage the paperwork so you can focus on growing your business confidently.
             </p>
 
             <div class="hero-buttons fade-in-delay">
-                <a href="contact.html" class="btn-primary">Get In Touch</a>
-                <a href="about.html" class="btn-secondary">Learn More</a>
+                <a href="./assets/pages/contact.html" class="btn-primary">Get Started Today</a>
+                <a href="./assets/pages/Services/services.html" class="btn-secondary">Explore Services</a>
             </div>
         </div>
     </section>
@@ -75,7 +100,7 @@
     <section class="about-preview fade-in">
         <div class="about-container">
             <h2 class="section-title">
-                About <span>G Groups</span>
+                About <span>G Group's</span>
             </h2>
 
             <p class="section-description">
@@ -84,7 +109,7 @@
                 while building strong and lasting client relationships.
             </p>
 
-            <a href="about.html" class="premium-btn">
+            <a href="./assets/pages/about.html" class="premium-btn">
                 Learn More →
             </a>
         </div>
@@ -94,25 +119,27 @@
     <!-- Services Preview -->
     <section class="services-preview">
         <div class="container">
-            <h2>Our Services</h2>
+            <h2 class="section-title">Our Premium Services</h2>
 
             <div class="service-boxes">
                 <div class="box">
+                    <div class="icon"></div>
                     <h3>Service One</h3>
-                    <p>High-quality solutions tailored to your needs.</p>
+                    <p>High-quality solutions tailored perfectly to your business goals.</p>
                 </div>
 
                 <div class="box">
+                    <div class="icon"></div>
                     <h3>Service Two</h3>
-                    <p>Professional expertise delivering outstanding results.</p>
+                    <p>Professional expertise delivering measurable and outstanding results.</p>
                 </div>
 
                 <div class="box">
+                    <div class="icon"></div>
                     <h3>Service Three</h3>
-                    <p>Innovative strategies for sustainable growth.</p>
+                    <p>Innovative strategies designed for long-term sustainable growth.</p>
                 </div>
             </div>
-
             <a href="services.html" class="section-btn">View All Services</a>
         </div>
     </section>
