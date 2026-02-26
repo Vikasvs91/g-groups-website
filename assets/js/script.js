@@ -36,6 +36,9 @@ document.addEventListener("DOMContentLoaded", function () {
         overlay.addEventListener("click", function () {
             navbar.classList.remove("active");
             overlay.classList.remove("active");
+            menuToggle.innerHTML =
+                '<i class="fa-solid fa-bars"></i>';
+            overlay.classList.remove("active");
         });
     }
 
@@ -117,6 +120,26 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
+
+    /* =========================
+    Scroll Reveal Animation
+    ========================= */
+
+    function revealOnScroll() {
+
+        const reveals = document.querySelectorAll(".reveal");
+
+        reveals.forEach((element) => {
+
+            const windowHeight = window.innerHeight;
+            const elementTop = element.getBoundingClientRect().top;
+            const revealPoint = 120;
+
+            if (elementTop < windowHeight - revealPoint) {
+                element.classList.add("active");
+            }
+        });
+    }
  /* =========================
           3. Fade In Animation
  ========================== */
@@ -160,53 +183,118 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    /* =========================
-       5. Contact Form Validation
-    ========================== */
-    const form = document.querySelector("form");
+  /* =========================
+    5. Contact Form Submit
+    ========================= */
 
-    if (form) {
-        form.addEventListener("submit", function (e) {
+    const contactForm = document.getElementById("contactForm");
 
-            const name = form.querySelector("input[name='name']").value.trim();
-            const email = form.querySelector("input[name='email']").value.trim();
-            const message = form.querySelector("textarea[name='message']").value.trim();
+    if (contactForm) {
 
-            if (name === "" || email === "" || message === "") {
-                e.preventDefault();
-                alert("Please fill in all required fields.");
+        const submitBtn = document.getElementById("submitBtn");
+        const successMessage = document.getElementById("successMessage");
+
+        contactForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            /* =====================
+            Honeypot Spam Check
+            ===================== */
+            const honeypot =
+                contactForm.querySelector("input[name='website']");
+
+            if (honeypot && honeypot.value.trim() !== "") {
+                console.warn("🚫 Spam detected");
+                return;
+            }
+
+            /* =====================
+            Get Values
+            ===================== */
+            const name =
+                contactForm.querySelector("[name='name']").value.trim();
+
+            const email =
+                contactForm.querySelector("[name='email']").value.trim();
+
+            const phone =
+                contactForm.querySelector("[name='phone']").value.trim();
+
+            const service =
+                contactForm.querySelector("[name='service']").value;
+
+            const message =
+                contactForm.querySelector("[name='message']").value.trim();
+
+            /* =====================
+            Validation
+            ===================== */
+            if (!name || !email || !phone || !service || !message) {
+                alert("Please fill all required fields.");
                 return;
             }
 
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!email.match(emailPattern)) {
-                e.preventDefault();
-                alert("Please enter a valid email address.");
+            if (!emailPattern.test(email)) {
+                alert("Enter valid email address");
                 return;
             }
 
-            alert("Thank you! Your message has been submitted.");
+            const phonePattern = /^[6-9]\d{9}$/;
+            if (!phonePattern.test(phone)) {
+                alert("Enter valid 10-digit phone number");
+                return;
+            }
+
+            /* =====================
+            Loading State
+            ===================== */
+            submitBtn.innerHTML =
+                '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+
+            submitBtn.disabled = true;
+
+            const formData = new FormData(contactForm);
+
+            /* =====================
+            Send to Google Sheet
+            ===================== */
+            fetch("https://script.google.com/macros/s/AKfycbxRd896HP8heESP7mbl18NcqqPgHVUZFL677qHA2CXwq8XVWCY01XhV8Fao98e6OAlc/exec", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) throw new Error();
+                return response.text();
+            })
+            .then(() => {
+
+                /* ✅ Reset Form */
+                contactForm.reset();
+
+                /* ✅ SHOW SUCCESS ANIMATION */
+                successMessage.classList.add("show");
+
+                /* ✅ Auto Hide */
+                setTimeout(() => {
+                    successMessage.classList.remove("show");
+                }, 5000);
+
+            })
+            .catch(() => {
+                alert("Submission failed. Try again.");
+            })
+            .finally(() => {
+
+                submitBtn.innerHTML = "Send Message";
+                submitBtn.disabled = false;
+
+            });
         });
     }
-
-
-    // /* =========================
-    //    5. Scroll Fade Animation
-    // ========================== */
-    // const fadeElements = document.querySelectorAll(".box, .service-card, .value-box, .section-title, .section-description");
-
-    // function fadeInOnScroll() {
-    //     fadeElements.forEach(el => {
-    //         const elementTop = el.getBoundingClientRect().top;
-    //         const windowHeight = window.innerHeight;
-
-    //         if (elementTop < windowHeight - 50) {
-    //             el.classList.add("fade-in");
-    //         }
-    //     });
-    // }
-
-    // window.addEventListener("scroll", fadeInOnScroll);
-    // fadeInOnScroll();
+    window.addEventListener("scroll", revealOnScroll, {
+        passive: true
+    });
+    revealOnScroll(); // first load ki
 
 });

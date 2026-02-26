@@ -5,12 +5,16 @@
     <title>Contact Us | G Groups</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Contact G Groups for professional services and business inquiries. We are here to help you.">
+    <meta property="og:title" content="Contact G Groups">
+    <meta property="og:description" content="Get expert financial and business consultation.">
+    <meta property="og:type" content="website">
 
     <!-- Favicon -->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <!-- CSS -->
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/Contact.css">
 
     <!-- Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -72,69 +76,133 @@
         <div class="container contact-grid">
 
             <!-- Contact Form -->
-            <div class="contact-form">
+            <div class="contact-form reveal">
                 <h2>Send Us a Message</h2>
 
-                <form id="contactForm">
+                <form id="contactForm" autocomplete="on">
+
+                    <!-- Honeypot Anti-Spam -->
+                    <input
+                        type="text"
+                        name="website"
+                        class="honeypot-field"
+                        autocomplete="new-password"
+                        tabindex="-1"
+                        aria-hidden="true">
 
                     <div class="form-group">
-                        <input type="text" name="name" placeholder="Your Name" required>
+                        <input type="text" name="name" required placeholder=" ">
+                        <label>Your Name</label>
                     </div>
 
                     <div class="form-group">
-                        <input type="email" name="email" placeholder="Your Email" required>
+                        <input type="email" name="email" required placeholder=" ">
+                        <label>Email Address</label>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" name="subject" placeholder="Subject">
+                        <input type="tel" name="phone" required placeholder=" ">
+                        <label>Phone Number</label>
                     </div>
 
                     <div class="form-group">
-                        <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+                        <select name="service" required>
+                            <option value="" disabled selected hidden></option>
+                            <option>Financial Consulting</option>
+                            <option>Business Registration</option>
+                            <option>Loan Assistance</option>
+                            <option>Other</option>
+                        </select>
+                        <label>Select Service</label>
                     </div>
 
-                    <button type="submit" class="hero-btn">Send Message</button>
+                    <div class="form-group">
+                        <input type="text" name="subject" placeholder=" ">
+                        <label>Subject</label>
+                    </div>
 
-                    <!-- Success Message -->
-                    <p id="successMessage" style="display:none; color:green; margin-top:15px;">
-                        Thank you! Your message has been sent successfully.
+                    <div class="form-group">
+                        <textarea name="message" rows="5" required placeholder=" "></textarea>
+                        <label>Your Message</label>
+                    </div>
+
+                    <button type="submit" class="hero-btn" id="submitBtn">
+                        <span>Send Message</span>
+                    </button>
+
+                    <p class="privacy-note">🔒 Your information is safe with us.</p>
+
+                    <p id="successMessage" class="success-message">
+                        ✅ Thank you! Message sent successfully! We will contact you soon.
                     </p>
+                    <p class="response-note">We usually respond within 24 hours.</p>
 
                 </form>
+
+                <div class="contact-benefits">
+                    <p> Complete End-to-End Service Support</p>
+                    <p> Fast & Reliable Processing</p>
+                    <p> Experienced Financial Professionals</p>
+                </div>
             </div>
 
-            <script>
-            document.getElementById("contactForm").addEventListener("submit", function(e){
-                e.preventDefault();
-
-                const formData = new FormData(this);
-
-                fetch("https://script.google.com/macros/s/AKfycbynfnsy4jeUFQdUSRB-Hfs3zXBQ5s22QRS9g70sGdCsybAxqvDwbd0w616JamnBc9M/exec", {
-                    method: "POST",
-                    body: formData
-                })
-                .then(response => response.text())
-                .then(data => {
-
-                    // Hide form elements
-                    document.querySelectorAll("#contactForm .form-group, #contactForm button")
-                        .forEach(el => el.style.display = "none");
-
-                    // Show thank you message
-                    document.getElementById("successMessage").style.display = "block";
-                })
-                .catch(error => {
-                    alert("Something went wrong. Please try again.");
-                });
-            });
-            </script>
+            
 
             <!-- Contact Info -->
-            <div class="contact-info">
-                <h2>Contact Information</h2>
-                <p><strong>Address:</strong> Your Business Address Here</p>
-                <p><strong>Email:</strong> ggroups.finance@gmail.com</p>
-                <p><strong>Phone:</strong> +91 7671942307</p>
+            <div class="contact-info reveal">
+                <h2>Get In <span>Touch</span></h2>
+
+                <div class="info-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>Andhra Pradesh, India</span>
+                </div>
+
+                <div class="info-item">
+                    <i class="fa-solid fa-envelope"></i>
+                    <a href="mailto:ggroups.finance@gmail.com">
+                        ggroups.finance@gmail.com
+                    </a>
+                </div>
+
+                <div class="info-item">
+                    <i class="fa-solid fa-phone"></i>
+                    <a href="tel:+917671942307">
+                        +91 7671942307
+                    </a>
+                </div>
+
+                <div class="business-hours">
+                    <h3>
+                        <i class="fa-solid fa-clock"></i>
+                        Business Hours
+                    </h3>
+
+                    <p>
+                        <strong>Mon – Sat</strong>
+                        <span>9:30 AM – 7:00 PM</span>
+                    </p>
+
+                    <p>
+                        <strong>Sunday</strong>
+                        <span>Closed</span>
+                    </p>
+                </div>
+
+                <!-- WhatsApp -->
+                <a href="https://wa.me/917671942307?text=Hello%20G%20Groups,%20I%20need%20consultation."
+                    target="_blank"
+                    class="whatsapp-btn">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    Chat on WhatsApp
+                </a>
+
+                <!-- Social -->
+                <div class="social-links">
+                    <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                </div>
+
             </div>
 
         </div>
@@ -143,16 +211,91 @@
     <!-- Call To Action -->
     <section class="cta">
         <div class="container">
-            <h2>Let’s Work Together</h2>
-            <a href="./Services/services.html" class="hero-btn">Explore Our Services</a>
+            <h2>Need Help With Your Business or Financial Work?</h2>
+            <a href="./Services/services.html" class="hero-btn">
+                View Our Services
+            </a>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <p>© 2026 G Groups. All Rights Reserved.</p>
+    <!-- =========================
+            Footer
+    ========================= -->
+    <footer class="footer">
+
+        <div class="container footer-grid">
+
+            <!-- Company -->
+            <div class="footer-col">
+                <h3>G Groups</h3>
+                <p>
+                    Delivering end-to-end financial, taxation, and
+                    business compliance services with real execution
+                    and measurable results.
+                </p>
+            </div>
+
+            <!-- Services -->
+            <div class="footer-col">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="#">GST Filing</a></li>
+                    <li><a href="#">Income Tax Services</a></li>
+                    <li><a href="#">Business Registration</a></li>
+                    <li><a href="#">Company Compliance</a></li>
+                </ul>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="./Services/services.html">Services</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div class="footer-col">
+                <h4>Contact</h4>
+
+                <p>
+                    Email:
+                    <a href="mailto:ggroups.finance@gmail.com">
+                        ggroups.finance@gmail.com
+                    </a>
+                </p>
+
+                <p>
+                    Phone:
+                    <a href="tel:+917671942307">
+                        +91 7671942307
+                    </a>
+                </p>
+
+                <p>Andhra Pradesh, India</p>
+
+                <!-- Social Media -->
+                <div class="footer-social">
+                    <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                </div>
+
+            </div>
+
         </div>
+
+        <!-- Bottom -->
+        <div class="footer-bottom">
+            <p>© 2026 G Groups. All Rights Reserved.</p>
+            <p class="footer-note">
+                GST • Taxation • Business Compliance Services
+            </p>
+        </div>
+
     </footer>
 
     <!-- JS -->
